@@ -4,7 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.qouteall.immersive_portals.CGlobal;
 import com.qouteall.immersive_portals.CHelper;
 import com.qouteall.immersive_portals.McHelper;
-import com.qouteall.immersive_portals.OFInterface;
 import com.qouteall.immersive_portals.my_util.Plane;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalLike;
@@ -51,10 +50,10 @@ public class FrontClipping {
     }
     
     public static boolean isShaderClipping() {
-        return OFInterface.isShaders.getAsBoolean() &&
+        return false; /*OFInterface.isShaders.getAsBoolean() &&
             !RenderDimensionRedirect.isNoShader(
                 Minecraft.getInstance().world.func_234923_W_()
-            );
+            );*/
     }
     
     private static void loadClippingPlaneClassical(MatrixStack matrixStack) {

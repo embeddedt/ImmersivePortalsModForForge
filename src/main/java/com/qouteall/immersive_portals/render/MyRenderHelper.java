@@ -7,7 +7,6 @@ import com.qouteall.immersive_portals.CGlobal;
 import com.qouteall.immersive_portals.CHelper;
 import com.qouteall.immersive_portals.ClientWorldLoader;
 import com.qouteall.immersive_portals.McHelper;
-import com.qouteall.immersive_portals.OFInterface;
 import com.qouteall.immersive_portals.portal.PortalLike;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -46,15 +45,6 @@ public class MyRenderHelper {
             () -> {
                 shaderManager.loadContentShaderAndShaderVars(0);
                 
-                if (OFInterface.isShaders.getAsBoolean()) {
-                    GlStateManager.viewport(
-                        0,
-                        0,
-                        PortalRenderer.client.getFramebuffer().framebufferWidth,
-                        PortalRenderer.client.getFramebuffer().framebufferHeight
-                    );
-                }
-                
                 GlStateManager.enableTexture();
                 GlStateManager.activeTexture(GL13.GL_TEXTURE0);
                 
@@ -69,8 +59,6 @@ public class MyRenderHelper {
                 shaderManager.unloadShader();
                 
                 textureProvider.unbindFramebufferTexture();
-                
-                OFInterface.resetViewport.run();
             }
         );
         CHelper.checkGlError();

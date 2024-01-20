@@ -8,7 +8,6 @@ import com.qouteall.immersive_portals.Global;
 import com.qouteall.immersive_portals.Helper;
 import com.qouteall.immersive_portals.McHelper;
 import com.qouteall.immersive_portals.ModMain;
-import com.qouteall.immersive_portals.OFInterface;
 import com.qouteall.immersive_portals.PehkuiInterface;
 import com.qouteall.immersive_portals.ducks.IEClientPlayNetworkHandler;
 import com.qouteall.immersive_portals.ducks.IEClientWorld;
@@ -339,9 +338,6 @@ public class ClientTeleportationManager {
             toDimension.func_240901_a_(),
             tickTimeForTeleportation
         ));
-        
-        
-        OFInterface.onPlayerTraveled.accept(fromDimension, toDimension);
         
         FogRendererContext.onPlayerTeleport(fromDimension, toDimension);
         

@@ -1,7 +1,6 @@
 package com.qouteall.immersive_portals.mixin.client.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.qouteall.immersive_portals.OFInterface;
 import com.qouteall.immersive_portals.portal.PortalLike;
 import com.qouteall.immersive_portals.render.context_management.PortalRendering;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -27,9 +26,6 @@ public class MixinBlockEntityRenderDispatcher {
         IRenderTypeBuffer vertexConsumerProvider,
         CallbackInfo ci
     ) {
-        if (OFInterface.isShadowPass.getAsBoolean()) {
-            return;
-        }
         if (PortalRendering.isRendering()) {
             PortalLike renderingPortal = PortalRendering.getRenderingPortal();
             boolean canRender = renderingPortal.isInside(

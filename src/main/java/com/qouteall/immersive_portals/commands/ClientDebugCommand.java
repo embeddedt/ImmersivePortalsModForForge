@@ -18,7 +18,6 @@ import com.qouteall.immersive_portals.ducks.IEEntity;
 import com.qouteall.immersive_portals.ducks.IEWorldRenderer;
 import com.qouteall.immersive_portals.my_util.MyTaskList;
 import com.qouteall.immersive_portals.network.McRemoteProcedureCall;
-import com.qouteall.immersive_portals.optifine_compatibility.UniformReport;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.render.MyBuiltChunkStorage;
 import com.qouteall.immersive_portals.render.PortalRenderInfo;
@@ -350,48 +349,6 @@ public class ClientDebugCommand {
                     });
                     return 0;
                 })
-        );
-        builder = builder.then(Commands
-            .literal("uniform_report_textured")
-            .executes(context -> {
-                UniformReport.launchUniformReport(
-                    new String[]{
-                        "gbuffers_textured", "gbuffers_textured_lit"
-                    },
-                    s -> context.getSource().sendFeedback(
-                        new StringTextComponent(s), true
-                    )
-                );
-                return 0;
-            })
-        );
-        builder = builder.then(Commands
-            .literal("uniform_report_terrain")
-            .executes(context -> {
-                UniformReport.launchUniformReport(
-                    new String[]{
-                        "gbuffers_terrain", "gbuffers_terrain_solid"
-                    },
-                    s -> context.getSource().sendFeedback(
-                        new StringTextComponent(s), true
-                    )
-                );
-                return 0;
-            })
-        );
-        builder = builder.then(Commands
-            .literal("uniform_report_shadow")
-            .executes(context -> {
-                UniformReport.launchUniformReport(
-                    new String[]{
-                        "shadow_solid", "shadow"
-                    },
-                    s -> context.getSource().sendFeedback(
-                        new StringTextComponent(s), true
-                    )
-                );
-                return 0;
-            })
         );
         builder.then(Commands
             .literal("erase_chunk")

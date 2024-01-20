@@ -4,7 +4,6 @@ import com.qouteall.immersive_portals.CHelper;
 import com.qouteall.immersive_portals.ClientWorldLoader;
 import com.qouteall.immersive_portals.Global;
 import com.qouteall.immersive_portals.McHelper;
-import com.qouteall.immersive_portals.OFInterface;
 import com.qouteall.immersive_portals.ducks.IEGameRenderer;
 import com.qouteall.immersive_portals.ducks.IEWorldRenderer;
 import com.qouteall.immersive_portals.miscellaneous.FPSMonitor;
@@ -142,14 +141,6 @@ public class RenderStates {
     }
     
     private static void updateViewBobbingFactor(Entity cameraEntity) {
-        if (lastPortalRenderInfos.size() != 0) {
-            // view bobbing has issue with optifine
-            if (OFInterface.isOptifinePresent) {
-                setViewBobFactor(0);
-                return;
-            }
-        }
-        
         if (renderedScalingPortal) {
             setViewBobFactor(0);
             renderedScalingPortal = false;

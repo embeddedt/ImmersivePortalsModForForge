@@ -5,7 +5,6 @@ import com.qouteall.immersive_portals.CHelper;
 import com.qouteall.immersive_portals.Global;
 import com.qouteall.immersive_portals.Helper;
 import com.qouteall.immersive_portals.McHelper;
-import com.qouteall.immersive_portals.OFInterface;
 import com.qouteall.immersive_portals.PehkuiInterface;
 import com.qouteall.immersive_portals.dimension_sync.DimId;
 import com.qouteall.immersive_portals.my_util.BoxPredicate;
@@ -331,7 +330,7 @@ public class Portal extends Entity implements PortalLike {
         if (this instanceof Mirror) {
             //rendering portal behind translucent objects with shader is broken
             double mirrorOffset =
-                (OFInterface.isShaders.getAsBoolean() || Global.pureMirror) ? 0.01 : -0.01;
+                (Global.pureMirror) ? 0.01 : -0.01;
             portalPosRelativeToCamera = portalPosRelativeToCamera.add(
                 ((Mirror) this).getNormal().scale(mirrorOffset));
         }

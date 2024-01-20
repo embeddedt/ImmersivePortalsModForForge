@@ -4,9 +4,6 @@ import com.qouteall.hiding_in_the_bushes.MyNetworkClient;
 import com.qouteall.hiding_in_the_bushes.O_O;
 import com.qouteall.immersive_portals.miscellaneous.GcMonitor;
 import com.qouteall.immersive_portals.my_util.MyTaskList;
-import com.qouteall.immersive_portals.optifine_compatibility.OFBuiltChunkStorageFix;
-import com.qouteall.immersive_portals.optifine_compatibility.OFGlobal;
-import com.qouteall.immersive_portals.optifine_compatibility.OFInterfaceInitializer;
 import com.qouteall.immersive_portals.render.CrossPortalEntityRenderer;
 import com.qouteall.immersive_portals.render.PortalRenderInfo;
 import com.qouteall.immersive_portals.render.PortalRenderer;
@@ -30,37 +27,19 @@ public class ModMainClient {
             //do not switch when rendering
             return;
         }
-        if (OFInterface.isShaders.getAsBoolean()) {
-            switch (Global.renderMode) {
-                case normal:
-                    switchRenderer(OFGlobal.rendererMixed);
-                    break;
-                case compatibility:
-                    switchRenderer(OFGlobal.rendererDeferred);
-                    break;
-                case debug:
-                    switchRenderer(OFGlobal.rendererDebugWithShader);
-                    break;
-                case none:
-                    switchRenderer(CGlobal.rendererDummy);
-                    break;
-            }
-        }
-        else {
-            switch (Global.renderMode) {
-                case normal:
-                    switchRenderer(CGlobal.rendererUsingStencil);
-                    break;
-                case compatibility:
-                    switchRenderer(CGlobal.rendererUsingFrameBuffer);
-                    break;
-                case debug:
-                    switchRenderer(CGlobal.rendererDebug);
-                    break;
-                case none:
-                    switchRenderer(CGlobal.rendererDummy);
-                    break;
-            }
+        switch (Global.renderMode) {
+            case normal:
+                switchRenderer(CGlobal.rendererUsingStencil);
+                break;
+            case compatibility:
+                switchRenderer(CGlobal.rendererUsingFrameBuffer);
+                break;
+            case debug:
+                switchRenderer(CGlobal.rendererDebug);
+                break;
+            case none:
+                switchRenderer(CGlobal.rendererDummy);
+                break;
         }
     }
     
@@ -115,16 +94,7 @@ public class ModMainClient {
         
         CloudContext.init();
         
-        OFInterface.isOptifinePresent = O_O.detectOptiFine();
-        if (OFInterface.isOptifinePresent) {
-            OFInterfaceInitializer.init();
-            OFBuiltChunkStorageFix.init();
-            showOptiFineWarning();
-        }
-        
         GcMonitor.initClient();
-        
-        Helper.log(OFInterface.isOptifinePresent ? "Optifine is present" : "Optifine is not present");
     }
     
 }

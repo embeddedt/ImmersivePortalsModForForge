@@ -7,10 +7,8 @@ import com.qouteall.immersive_portals.Global;
 import com.qouteall.immersive_portals.Helper;
 import com.qouteall.immersive_portals.McHelper;
 import com.qouteall.immersive_portals.ModMain;
-import com.qouteall.immersive_portals.OFInterface;
 import com.qouteall.immersive_portals.ducks.IEEntity;
 import com.qouteall.immersive_portals.ducks.IEWorldRenderer;
-import com.qouteall.immersive_portals.optifine_compatibility.ShaderClippingManager;
 import com.qouteall.immersive_portals.portal.Mirror;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalLike;
@@ -106,9 +104,6 @@ public class CrossPortalEntityRenderer {
                 client.getRenderTypeBuffers().getBufferSource().finish();
                 
                 FrontClipping.setupOuterClipping(matrixStack, collidingPortal);
-                if (OFInterface.isShaders.getAsBoolean()) {
-                    ShaderClippingManager.update();
-                }
             }
         }
     }
@@ -265,7 +260,6 @@ public class CrossPortalEntityRenderer {
             transformingPortal, entity, matrixStack
         );
         
-        OFInterface.updateEntityTypeForShader.accept(entity);
         IRenderTypeBuffer.Impl consumers = client.getRenderTypeBuffers().getBufferSource();
         ((IEWorldRenderer) client.worldRenderer).myRenderEntity(
             entity,
@@ -323,9 +317,6 @@ public class CrossPortalEntityRenderer {
     
     public static boolean shouldRenderEntityNow(Entity entity) {
         Validate.notNull(entity);
-        if (OFInterface.isShadowPass.getAsBoolean()) {
-            return true;
-        }
         if (PortalRendering.isRendering()) {
             PortalLike renderingPortal = PortalRendering.getRenderingPortal();
             Portal collidingPortal = ((IEEntity) entity).getCollidingPortal();

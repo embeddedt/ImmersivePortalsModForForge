@@ -8,8 +8,6 @@ import com.qouteall.immersive_portals.ClientWorldLoader;
 import com.qouteall.immersive_portals.Global;
 import com.qouteall.immersive_portals.Helper;
 import com.qouteall.immersive_portals.McHelper;
-import com.qouteall.immersive_portals.OFInterface;
-import com.qouteall.immersive_portals.SodiumInterface;
 import com.qouteall.immersive_portals.block_manipulation.BlockManipulationClient;
 import com.qouteall.immersive_portals.ducks.IEGameRenderer;
 import com.qouteall.immersive_portals.ducks.IEMinecraftClient;
@@ -134,7 +132,6 @@ public class MyGameRenderer {
         GameType oldGameMode = playerListEntry.getGameType();
         boolean oldNoClip = client.player.noClip;
         boolean oldDoRenderHand = ieGameRenderer.getDoRenderHand();
-        OFInterface.createNewRenderInfosNormal.accept(worldRenderer);
         ObjectList oldVisibleChunks = ((IEWorldRenderer) oldWorldRenderer).getVisibleChunks();
         RayTraceResult oldCrosshairTarget = client.objectMouseOver;
         ActiveRenderInfo oldCamera = client.gameRenderer.getActiveRenderInfo();
@@ -288,14 +285,6 @@ public class MyGameRenderer {
     }
     
     public static void resetFogState() {
-        if (OFInterface.isFogDisabled.getAsBoolean()) {
-            return;
-        }
-        
-        if (OFInterface.isShaders.getAsBoolean()) {
-            return;
-        }
-        
         forceResetFogState();
     }
     

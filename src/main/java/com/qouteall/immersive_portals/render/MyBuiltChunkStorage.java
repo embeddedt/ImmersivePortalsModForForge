@@ -6,7 +6,6 @@ import com.qouteall.immersive_portals.ModMain;
 import com.qouteall.immersive_portals.ducks.IEBuiltChunk;
 import com.qouteall.immersive_portals.miscellaneous.GcMonitor;
 import com.qouteall.immersive_portals.my_util.ObjectBuffer;
-import com.qouteall.immersive_portals.optifine_compatibility.OFBuiltChunkStorageFix;
 import com.qouteall.immersive_portals.render.context_management.PortalRendering;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ViewFrustum;
@@ -88,8 +87,6 @@ public class MyBuiltChunkStorage extends ViewFrustum {
         presets.clear();
         builtChunkBuffer.destroyAll();
         
-        OFBuiltChunkStorageFix.onBuiltChunkStorageCleanup(this);
-        
         isAlive = false;
     }
     
@@ -122,13 +119,11 @@ public class MyBuiltChunkStorage extends ViewFrustum {
         if (!isRenderingPortal) {
             if (shouldUpdateMainPresetNeighbor) {
                 shouldUpdateMainPresetNeighbor = false;
-                OFBuiltChunkStorageFix.updateNeighbor(this, preset.data);
                 preset.isNeighborUpdated = true;
             }
         }
         
         if (!preset.isNeighborUpdated) {
-            OFBuiltChunkStorageFix.updateNeighbor(this, preset.data);
             preset.isNeighborUpdated = true;
             if (isRenderingPortal) {
                 shouldUpdateMainPresetNeighbor = true;
@@ -213,10 +208,6 @@ public class MyBuiltChunkStorage extends ViewFrustum {
                     basePos.getX(), basePos.getY(), basePos.getZ()
                 );
                 
-                OFBuiltChunkStorageFix.onBuiltChunkCreated(
-                    this, builtChunk
-                );
-                
                 return builtChunk;
             }
         );
@@ -266,8 +257,6 @@ public class MyBuiltChunkStorage extends ViewFrustum {
                 return false;
             }
         });
-        
-        OFBuiltChunkStorageFix.purgeRenderRegions(this);
         
         Minecraft.getInstance().getProfiler().endSection();
     }

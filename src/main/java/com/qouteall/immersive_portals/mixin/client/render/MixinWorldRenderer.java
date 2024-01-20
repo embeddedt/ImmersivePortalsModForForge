@@ -6,7 +6,6 @@ import com.qouteall.immersive_portals.CGlobal;
 import com.qouteall.immersive_portals.ClientWorldLoader;
 import com.qouteall.immersive_portals.Helper;
 import com.qouteall.immersive_portals.ModMain;
-import com.qouteall.immersive_portals.OFInterface;
 import com.qouteall.immersive_portals.ducks.IEWorldRenderer;
 import com.qouteall.immersive_portals.render.CrossPortalEntityRenderer;
 import com.qouteall.immersive_portals.render.FrontClipping;
@@ -467,33 +466,12 @@ public abstract class MixinWorldRenderer implements IEWorldRenderer {
             RenderType.getBlockRenderTypes().get(0).clearRenderState();
             
             if (PortalRendering.getRenderingPortal().isFuseView()) {
-                if (!OFInterface.isShaders.getAsBoolean()) {
-                    ci.cancel();
-                }
-            }
-            
-            //fix sky abnormal with optifine and fog disabled
-            if (OFInterface.isFogDisabled.getAsBoolean()) {
-                GL11.glEnable(GL11.GL_FOG);
+                ci.cancel();
             }
         }
         
         if (PortalRendering.isRenderingOddNumberOfMirrors()) {
             MyRenderHelper.applyMirrorFaceCulling();
-        }
-    }
-    
-    //fix sun abnormal with optifine and fog disabled
-    @Inject(
-        method = "Lnet/minecraft/client/renderer/WorldRenderer;renderSky(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V",
-        at = @At(
-            value = "FIELD",
-            target = "Lnet/minecraft/client/renderer/WorldRenderer;SUN_TEXTURES:Lnet/minecraft/util/ResourceLocation;"
-        )
-    )
-    private void onStartRenderingSun(MatrixStack matrixStack, float f, CallbackInfo ci) {
-        if (OFInterface.isFogDisabled.getAsBoolean()) {
-            GL11.glDisable(GL11.GL_FOG);
         }
     }
     
@@ -534,34 +512,11 @@ public abstract class MixinWorldRenderer implements IEWorldRenderer {
         )
     )
     private void redirectUpdateChunks(WorldRenderer worldRenderer, long limitTime) {
-        if (PortalRendering.isRendering() && (!OFInterface.isOptifinePresent)) {
+        if (PortalRendering.isRendering()) {
             portal_updateChunks();
         }
         else {
             updateChunks(limitTime);
-        }
-    }
-    
-    //fix cloud fog abnormal with OptiFine and fog disabled
-    @Inject(
-        method = "Lnet/minecraft/client/renderer/WorldRenderer;renderClouds(Lcom/mojang/blaze3d/matrix/MatrixStack;FDDD)V",
-        at = @At(
-            value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/systems/RenderSystem;enableFog()V",
-            shift = At.Shift.AFTER
-        )
-    )
-    private void onEnableFogInRenderClouds(
-        MatrixStack matrices,
-        float tickDelta,
-        double cameraX,
-        double cameraY,
-        double cameraZ,
-        CallbackInfo ci
-    ) {
-        if (OFInterface.isFogDisabled.getAsBoolean()) {
-            MyGameRenderer.forceResetFogState();
-            GL11.glEnable(GL11.GL_FOG);
         }
     }
     

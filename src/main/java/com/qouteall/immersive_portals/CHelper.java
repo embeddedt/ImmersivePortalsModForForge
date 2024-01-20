@@ -39,7 +39,7 @@ public class CHelper {
     }
     
     public static boolean shouldDisableFog() {
-        return OFInterface.shouldDisableFog.getAsBoolean();
+        return false; // OFInterface.shouldDisableFog.getAsBoolean();
     }
     
     //do not inline this

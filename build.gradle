@@ -124,8 +124,6 @@ dependencies {
 
     //Mixin
 //    compile 'org.spongepowered:mixin:0.8.1-SNAPSHOT'
-
-    compileOnly files('ofdep.jar')
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
