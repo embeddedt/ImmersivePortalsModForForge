@@ -174,9 +174,6 @@ public class MyGameRenderer {
             ((IEMinecraftClient) client).setBufferBuilderStorage(secondaryBufferBuilderStorage);
         }
         
-        Object newSodiumContext = SodiumInterface.createNewRenderingContext.apply(worldRenderer);
-        Object oldSodiumContext = SodiumInterface.switchRenderingContext.apply(worldRenderer, newSodiumContext);
-        
         ((IEWorldRenderer) oldWorldRenderer).portal_setTransparencyShader(null);
         ((IEWorldRenderer) worldRenderer).portal_setTransparencyShader(null);
         ((IEWorldRenderer) worldRenderer).portal_setRenderDistance(renderDistance);
@@ -205,9 +202,6 @@ public class MyGameRenderer {
         catch (Throwable e) {
             limitedLogger.invoke(e::printStackTrace);
         }
-        
-        //recover
-        SodiumInterface.switchRenderingContext.apply(worldRenderer, oldSodiumContext);
         
         ((IEMinecraftClient) client).setWorldRenderer(oldWorldRenderer);
         client.world = oldEntityWorld;

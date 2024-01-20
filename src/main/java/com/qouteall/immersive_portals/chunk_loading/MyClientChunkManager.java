@@ -2,9 +2,11 @@ package com.qouteall.immersive_portals.chunk_loading;
 
 import com.qouteall.hiding_in_the_bushes.O_O;
 import com.qouteall.immersive_portals.ClientWorldLoader;
+import com.qouteall.immersive_portals.SodiumInterface;
 import com.qouteall.immersive_portals.my_util.SignalArged;
 import com.qouteall.immersive_portals.render.context_management.RenderDimensionRedirect;
 import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
+import me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer;
 import net.minecraft.client.multiplayer.ClientChunkProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
@@ -69,6 +71,12 @@ public class MyClientChunkManager extends ClientChunkProvider {
             Chunk chunk = chunkMap.get(chunkPos.asLong());
             if (positionEquals(chunk, x, z)) {
                 chunkMap.remove(chunkPos.asLong());
+                if(SodiumInterface.isSodiumPresent) {
+                    SodiumWorldRenderer sodiumRenderer = SodiumWorldRenderer.getInstanceNullable();
+                    if(sodiumRenderer != null) {
+                        sodiumRenderer.onChunkRemoved(x, z);
+                    }
+                }
                 O_O.postClientChunkUnloadEvent(chunk);
                 world.onChunkUnloaded(chunk);
                 clientChunkUnloadSignal.emit(chunk);
@@ -140,7 +148,12 @@ public class MyClientChunkManager extends ClientChunkProvider {
         }
         
         this.world.onChunkLoaded(x, z);
-        
+        if(SodiumInterface.isSodiumPresent) {
+            SodiumWorldRenderer sodiumRenderer = SodiumWorldRenderer.getInstanceNullable();
+            if(sodiumRenderer != null) {
+                sodiumRenderer.onChunkAdded(x, z);
+            }
+        }
         O_O.postClientChunkLoadEvent(worldChunk);
         clientChunkLoadSignal.emit(worldChunk);
         
